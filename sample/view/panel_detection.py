@@ -18,6 +18,8 @@ class DetectionPanel(base.MyPanel):
     def __init__(self, parent):
         super(DetectionPanel, self).__init__(parent)
 
+        self.detection_init = base.DetectionModel()
+
         self.vsizer = wx.BoxSizer(wx.VERTICAL)
 
         self.hsizer = wx.BoxSizer()
@@ -84,37 +86,34 @@ class DetectionPanel(base.MyPanel):
         if dlg.ShowModal() != wx.ID_OK:
             return
         path = dlg.GetPath()
-        self.bitmap.set_path(path)
+        print(path)
+        # self.bitmap.set_path(path)
         self.async_detect(path)
 
-    @util.async_dec
+    # @util.async_dec
     def async_detect(self, path):
         """Async detection."""
         self.log.log('Request: Detecting {}'.format(path))
-        self.result.SetLabelText('Detecting ...')
+        # self.result.SetLabelText('Detecting ...')
         self.btn.Disable()
-        self.face_list.Clear()
-        self.face_list.Refresh()
         self.rsizer.Layout()
         self.vhsizer.Layout()
 
         try:
-            attributes = (
-                'age,gender,headPose,smile,facialHair,glasses,emotion,hair,'
-                'makeup,occlusion,accessories,blur,exposure,noise')
-            detection = base.DetectionModel()
-            res = util.DD.face.detect()
-            faces = [model.Face(face, path) for face in res]
-            self.face_list.SetItems(faces)
-            util.draw_bitmap_rectangle(self.bitmap, faces)
+            
+            res = util.DD.detect.detect(path, self.detection_init.model,
+                class_names=['damage'])
+            # faces = [model.Face(face, path) for face in res]
+            # self.face_list.SetItems(faces)
+            # util.draw_bitmap_rectangle(self.bitmap, faces)
 
-            log_text = 'Response: Success. Detected {} face(s) in {}'.format(
-                len(res), path)
-            self.log.log(log_text)
-            text = '{} face(s) has been detected.'.format(len(res))
-            self.result.SetLabelText(text)
-        except util.DD.CognitiveFaceException as exp:
-            self.log.log('Response: {}. {}'.format(exp.code, exp.msg))
+            # log_text = 'Response: Success. Detected {} face(s) in {}'.format(
+            #     len(res), path)
+            # self.log.log(log_text)
+            # text = '{} face(s) has been detected.'.format(len(res))
+            # self.result.SetLabelText(text)
+        except Exception as exp:
+            self.log.log('Response: {}'.format(exp))
 
         self.btn.Enable()
         self.rsizer.Layout()

@@ -9,7 +9,7 @@ import time
 
 import requests
 
-import cognitive_face as CF
+import damage_detect as DD
 
 DEFAULT_BASE_URL = os.getenv('FACE_ENDPOINT', '')
 
@@ -153,7 +153,7 @@ def wait_for_person_group_training(person_group_id):
     """Wait for the finish of person group training."""
     idx = 1
     while True:
-        res = CF.person_group.get_status(person_group_id)
+        res = DD.person_group.get_status(person_group_id)
         if res['status'] in ('succeeded', 'failed'):
             break
         print('The training of Person Group {} is onging: #{}'.format(
@@ -166,7 +166,7 @@ def wait_for_large_face_list_training(large_face_list_id):
     """Wait for the finish of large face list training."""
     idx = 1
     while True:
-        res = CF.large_face_list.get_status(large_face_list_id)
+        res = DD.large_face_list.get_status(large_face_list_id)
         if res['status'] in ('succeeded', 'failed'):
             break
         print('The training of Large Face List {} is onging: #{}'.format(
@@ -179,7 +179,7 @@ def wait_for_large_person_group_training(large_person_group_id):
     """Wait for the finish of large person group training."""
     idx = 1
     while True:
-        res = CF.large_person_group.get_status(large_person_group_id)
+        res = DD.large_person_group.get_status(large_person_group_id)
         if res['status'] in ('succeeded', 'failed'):
             break
         print('The training of Large Person Group {} is onging: #{}'.format(
@@ -190,11 +190,11 @@ def wait_for_large_person_group_training(large_person_group_id):
 
 def clear_face_lists():
     """[Dangerous] Clear all the face lists and all related persisted data."""
-    face_lists = CF.face_list.lists()
+    face_lists = DD.face_list.lists()
     time.sleep(TIME_SLEEP)
     for face_list in face_lists:
         face_list_id = face_list['faceListId']
-        CF.face_list.delete(face_list_id)
+        DD.face_list.delete(face_list_id)
         print('Deleting Face List {}'.format(face_list_id))
         time.sleep(TIME_SLEEP)
 
@@ -202,11 +202,11 @@ def clear_face_lists():
 def clear_person_groups():
     """[Dangerous] Clear all the person groups and all related persisted data.
     """
-    person_groups = CF.person_group.lists()
+    person_groups = DD.person_group.lists()
     time.sleep(TIME_SLEEP)
     for person_group in person_groups:
         person_group_id = person_group['personGroupId']
-        CF.person_group.delete(person_group_id)
+        DD.person_group.delete(person_group_id)
         print('Deleting Person Group {}'.format(person_group_id))
         time.sleep(TIME_SLEEP)
 
@@ -215,11 +215,11 @@ def clear_large_face_lists():
     """[Dangerous] Clear all the large face lists and all related persisted
     data.
     """
-    large_face_lists = CF.large_face_list.list()
+    large_face_lists = DD.large_face_list.list()
     time.sleep(TIME_SLEEP)
     for large_face_list in large_face_lists:
         large_face_list_id = large_face_list['largeFaceListId']
-        CF.large_face_list.delete(large_face_list_id)
+        DD.large_face_list.delete(large_face_list_id)
         print('Deleting Large Face List {}'.format(large_face_list_id))
         time.sleep(TIME_SLEEP)
 
@@ -228,10 +228,10 @@ def clear_large_person_groups():
     """[Dangerous] Clear all the large person groups and all related persisted
     data.
     """
-    large_person_groups = CF.large_person_group.list()
+    large_person_groups = DD.large_person_group.list()
     time.sleep(TIME_SLEEP)
     for large_person_group in large_person_groups:
         large_person_group_id = large_person_group['largePersonGroupId']
-        CF.large_person_group.delete(large_person_group_id)
+        DD.large_person_group.delete(large_person_group_id)
         print('Deleting Large Person Group {}'.format(large_person_group_id))
         time.sleep(TIME_SLEEP)

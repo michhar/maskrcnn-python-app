@@ -167,10 +167,11 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             ax.add_patch(p)
     if show:
         ax.imshow(masked_image.astype(np.uint8))
-    if auto_show:
-        plt.show()
-    if save_image:
-        plt.savefig("result_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now()))
+
+    # Just always save image to disk
+    img_file = "result_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now())
+    plt.savefig(img_file)
+    return img_file
 
 def display_differences(image,
                         gt_box, gt_class_id, gt_mask,

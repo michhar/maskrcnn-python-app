@@ -1,5 +1,5 @@
 *.h5
-
+damage[0-9a-zA-Z]
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

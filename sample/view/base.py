@@ -5,13 +5,17 @@ File: view.py
 Description: Base components for Python SDK sample.
 """
 import time
+import os
+import sys
 
 import wx
 
 import util
 from damage_detect.custom import CustomConfig
+import damage_detect.model as modellib
 
-WEIGHTS_PATH = '../weights/mask_rcnn_damage_0050.h5'
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT_DIR)
 
 class MyPanel(wx.Panel):
     """Base Panel."""
@@ -87,19 +91,19 @@ class MyGridStaticBitmap(wx.Panel):
 
 
 class DetectionModel:
-    def __init__(self, weights_path='../weights/mask_rcnn_damage_0050.h5'):
+    def __init__(self, weights_path='mask_rcnn_damage_0050.h5'):
         self.weights_path = weights_path
         self.config = None
         self.model = None
 
         ## Config
-        load_inference_config()
+        self.load_inference_config()
 
         ## Initialize model
-        initialize_model()
+        self.initialize_model()
 
         ## Load weights
-        load_model_weights()
+        self.load_model_weights()
 
     def load_inference_config(self):
         class InferenceConfig(CustomConfig):
@@ -110,11 +114,11 @@ class DetectionModel:
         self.config = InferenceConfig()
 
     def initialize_model(self):
-        self.model = modellib.MaskRCNN(mode="inference", config=config,
-                            model_dir=os.getcwd('../weights/'))
+        self.model = modellib.MaskRCNN(mode="inference", config=self.config,
+                            model_dir=ROOT_DIR)
 
     def load_model_weights(self):
-        self.model.load_weights(self.weights_path, by_name=True)
+        self.model.load_weights(os.path.join(ROOT_DIR, self.weights_path), by_name=True)
 
 class WrapCaptionFaceList(wx.WrapSizer):
     """Wrap face list with caption under the face."""
