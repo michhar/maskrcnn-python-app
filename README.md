@@ -1,37 +1,24 @@
-# Detecting Car Damage with MaskRCNN for Instance Segmentation
+# Detecting Car Damage with Instance Segmentation
 
+![](./Assets/detected_ep50.png)
+
+A MaskRCNN algorithm is used to detect the car damage (output of the model is class, bounding box and mask).
 
 
 ## Getting started
 
-From the base directory of the repo:
+From the base directory of the repo, in a terminal, install the `damage_detect` package source code with:
+
 ```bash
 pip install .
 ```
 
-Place the ML model in the samples directory.
+Download and place the ML model in the `sample` directory.
 
-### Installing from the source code
-
-```bash
-python setup.py install
-```
-
-### Running the unit tests
-
-To run the tests you will need a valid subscription. You can get one [here](https://azure.microsoft.com/en-us/try/cognitive-services/?api=face-api).
-
-1. Copy `cognitive_face/tests/config.sample.py`  into `cognitive_face/tests/config.py`.
-1. Change the `KEY` and `BASE_URL` parameters to your own subscription's API key and endpoint.
-1. Run the following:
-
-```bash
-python setup.py test
-```
 
 ## Running the sample
 
-A sample desktop application is also provided.
+A sample desktop application is also provided in the `sample` directory.
 
 Currently it support the following combination of prerequisites:
 
@@ -45,32 +32,36 @@ Then run the following:
 
 ```bash
 git clone https://github.com/Microsoft/Cognitive-Face-Python.git
-cd Cognitive-Face-Python
+cd 
 pip install -r requirements.txt
 python sample
 ```
 
-![Sample app](./Assets/sample_screenshot.png)
+![Sample app](./Assets/)
 
+
+## Running the unit tests
+
+Run the following:
+
+```bash
+python setup.py test
+```
 
 ## Contributing
 
 We welcome contributions. Feel free to file issues and pull requests on the repo and we'll address them as we can. Learn more about how you can help on our [Contribution Rules & Guidelines](/CONTRIBUTING.md).
 
-You can reach out to us anytime with questions and suggestions using our communities below:
- - **Support questions:** [StackOverflow](https://stackoverflow.com/questions/tagged/microsoft-cognitive)
- - **Feedback & feature requests:** [Cognitive Services UserVoice Forum](https://cognitive.uservoice.com)
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+## Credits
 
-## Updates
-* [Face API Release Notes](https://docs.microsoft.com/en-us/azure/cognitive-services/face/releasenotes)
+* Much of the code and idea came from https://github.com/microsoft/Cognitive-Face-Python
+* Images used to train the model came from a Google image search
 
 ## License
+
 All Microsoft Cognitive Services SDKs and samples are licensed with the MIT License. For more details, see
 [LICENSE](/LICENSE.md).
 
 Sample images are licensed separately, please refer to [LICENSE-IMAGE](/LICENSE-IMAGE.md).
 
-## Developer Code of Conduct
-Developers using Cognitive Services, including this sample, are expected to follow the “Developer Code of Conduct for Microsoft Cognitive Services”, found at [http://go.microsoft.com/fwlink/?LinkId=698895](http://go.microsoft.com/fwlink/?LinkId=698895).

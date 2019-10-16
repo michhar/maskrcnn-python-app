@@ -140,7 +140,7 @@ def rotate_image(path):
     return pil_image_to_wx_image(img)
 
 
-def draw_bitmap_rectangle(bitmap, faces):
+def draw_bitmap_rectangle(bitmap):
     """Draw rectangle on bitmap."""
     dc = wx.MemoryDC(bitmap.bmp)
     dc.SetPen(wx.BLUE_PEN)
@@ -151,17 +151,23 @@ def draw_bitmap_rectangle(bitmap, faces):
     dc.SetFont(
         wx.Font(8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
                 wx.FONTWEIGHT_BOLD))
-    for face in faces:
-        dc.DrawRectangle(
-            face.rect.left * bitmap.scale, face.rect.top * bitmap.scale,
-            face.rect.width * bitmap.scale, face.rect.height * bitmap.scale)
-        if face.name:
-            text_width, text_height = dc.GetTextExtent(face.name)
-            dc.DrawText(face.name, face.rect.left * bitmap.scale,
-                        face.rect.top * bitmap.scale - text_height)
     dc.SelectObject(wx.NullBitmap)
     bitmap.bitmap.SetBitmap(bitmap.bmp)
 
+
+def PIL2wx(image):
+    width, height = image.size
+    return wx.Bitmap.FromBuffer(width, height, image.tobytes())
+
+def wx2PIL(bitmap):
+    size = tuple(bitmap.GetSize())
+    try:
+        buf = size[0]*size[1]*3*"\x00"
+        bitmap.CopyToBuffer(buf)
+    except:
+        del buf
+        buf = bitmap.ConvertToImage().GetData()
+    return Image.frombuffer("RGB", size, buf, "raw", "RGB", 0, 1)
 
 def pil_image_to_wx_image(pil_image):
     """Convert from PIL image to wx image."""

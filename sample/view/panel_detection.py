@@ -28,10 +28,8 @@ class DetectionPanel(base.MyPanel):
         self.hvsizer = wx.BoxSizer(wx.VERTICAL)
         self.hvsizer.SetMinSize((util.INNER_PANEL_WIDTH, -1))
 
-        label = ("To detect faces in an image, click the 'Choose Image' "
-                 "button. You will see a rectangle surrounding every face "
-                 "that the Face API detects. You will also see a list of "
-                 "attributes related to the faces.")
+        label = ("To detect car damage in an image, click the 'Choose Image' "
+                 "button. You will see a shape and box surrounding every damaged spot.")
         self.static_text = wx.StaticText(self, label=label)
         self.static_text.Wrap(util.INNER_PANEL_WIDTH)
         self.hvsizer.Add(self.static_text, 0, wx.ALL, 5)
@@ -48,6 +46,7 @@ class DetectionPanel(base.MyPanel):
         self.Bind(wx.EVT_BUTTON, self.OnChooseImage, self.btn)
 
         flag = wx.ALIGN_CENTER | wx.ALL
+        # Set up the place to place image element
         self.bitmap = base.MyStaticBitmap(self)
         self.lsizer.Add(self.bitmap, 0, flag, 5)
 
@@ -63,8 +62,6 @@ class DetectionPanel(base.MyPanel):
         self.rsizer.Add(self.result, 0, flag, 5)
 
         flag = wx.ALIGN_LEFT | wx.EXPAND | wx.ALL
-        self.face_list = base.MyFaceList(self)
-        self.rsizer.Add(self.face_list, 1, flag, 5)
 
         self.vhsizer.Add(self.rsizer, 0, wx.EXPAND)
 
@@ -101,11 +98,13 @@ class DetectionPanel(base.MyPanel):
 
         try:
             
+            # Use the ML algo on input image, give background (BG) as a class
             res = util.DD.detect.detect(path, self.detection_init.model,
-                class_names=['damage'])
-            # faces = [model.Face(face, path) for face in res]
-            # self.face_list.SetItems(faces)
-            # util.draw_bitmap_rectangle(self.bitmap, faces)
+                class_names=['BG', 'damage'])
+            # Read in image
+            self.bitmap.set_path(res['image_file'])
+            # Set the image on the StaticBitmap object for display
+            util.draw_bitmap_rectangle(self.bitmap)
 
             # log_text = 'Response: Success. Detected {} face(s) in {}'.format(
             #     len(res), path)

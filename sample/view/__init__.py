@@ -67,8 +67,8 @@ class MyFrame(wx.Frame):
     def __init__(self, parent):
         super(MyFrame, self).__init__(parent, title=TITLE, size=(1280, 768))
 
-        icon_path = 'Assets/Microsoft-logo_rgb_c-gray.png'
-        self.SetIcon(wx.Icon(icon_path))
+        # icon_path = 'Assets/Microsoft-logo_rgb_c-gray.png'
+        # self.SetIcon(wx.Icon(icon_path))
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -79,9 +79,9 @@ class MyFrame(wx.Frame):
         sizer.Add(self.book, 1, flag=wx.EXPAND)
 
         status_text = (
-            'Microsoft will receive the images you upload and may use them to '
-            'improve Face API and related services. By submitting an image, '
-            'you confirm you have consent from everyone in it.')
+            'Images from Google images were used to train this model. ' +
+            'This is not an official Microsoft product and images will not ' +
+            'be used commercially.')
         self.status = wx.StatusBar(self)
         self.status.SetStatusText(status_text)
         sizer.Add(self.status, flag=wx.EXPAND)

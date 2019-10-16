@@ -6,6 +6,7 @@ Description: Shared utilities for the Python SDK of the Cognitive Face API.
 """
 import os.path
 import time
+import matplotlib.pyplot as plt
 
 import requests
 

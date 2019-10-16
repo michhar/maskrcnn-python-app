@@ -2142,8 +2142,8 @@ class MaskRCNN():
         if hasattr(f, 'close'):
             f.close()
 
-        # Update the log directory
-        self.set_log_dir(filepath)
+        # # Update the log directory
+        # self.set_log_dir(filepath)
 
     def get_imagenet_weights(self):
         """Downloads ImageNet trained weights from Keras.
