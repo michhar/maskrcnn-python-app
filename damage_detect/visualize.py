@@ -170,7 +170,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
 
     # Just always save image to disk
     img_file = os.path.join(save_dir, "result_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now()))
-    fig.savefig(img_file)
+    fig.savefig(img_file, bbox_inches='tight', pad_inches=0, transparent=True)
     return img_file
 
 def display_differences(image,

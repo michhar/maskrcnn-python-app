@@ -32,7 +32,7 @@ def detect(image_file, model, class_names):
                                 class_names, r['scores'], ax=ax,
                                 title="Predictions", show=False)
 
-    return {'image_file': image_file}
+    return {'image_file': image_file, 'num_objects': len(r['rois'])}
 
 def detect_service(image, face_id=True, landmarks=False, attributes=''):
     """Detect human faces in an image and returns face locations, and

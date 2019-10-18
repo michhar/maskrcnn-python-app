@@ -84,14 +84,13 @@ class DetectionPanel(base.MyPanel):
             return
         path = dlg.GetPath()
         print(path)
-        # self.bitmap.set_path(path)
         self.async_detect(path)
 
     # @util.async_dec
     def async_detect(self, path):
         """Async detection."""
         self.log.log('Request: Detecting {}'.format(path))
-        # self.result.SetLabelText('Detecting ...')
+        self.result.SetLabelText('Detecting ...')
         self.btn.Disable()
         self.rsizer.Layout()
         self.vhsizer.Layout()
@@ -106,11 +105,11 @@ class DetectionPanel(base.MyPanel):
             # Set the image on the StaticBitmap object for display
             util.draw_bitmap_rectangle(self.bitmap)
 
-            # log_text = 'Response: Success. Detected {} face(s) in {}'.format(
-            #     len(res), path)
-            # self.log.log(log_text)
-            # text = '{} face(s) has been detected.'.format(len(res))
-            # self.result.SetLabelText(text)
+            log_text = 'Response: Success. Detected {} damaged location(s)'.format(
+                res['num_objects'], path)
+            self.log.log(log_text)
+            text = '{} damaged location(s) detected.'.format(res['num_objects'])
+            self.result.SetLabelText(text)
         except Exception as exp:
             self.log.log('Response: {}'.format(exp))
 

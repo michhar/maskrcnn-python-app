@@ -7,14 +7,19 @@ A MaskRCNN algorithm is used to detect the car damage (output of the model is cl
 
 ## Getting started
 
-From the base directory of the repo, in a terminal, install the `damage_detect` package source code with:
+For a fresh install, from the base directory of the repo, in a terminal, install the `damage-detect` package from source code with:
 
-```bash
-pip install .
-```
+`pip install .`
+
+> To ensure the proper python, in case of issues, you can always use `python -m pip install .`.
 
 Download and place the ML model in the `sample` directory.
 
+If the package is already installed, make sure to unintall first.
+
+`pip uninstall damage-detect -y`
+
+then install as above.
 
 ## Running the sample
 
@@ -36,6 +41,8 @@ cd
 pip install -r requirements.txt
 python sample
 ```
+
+If an error occurs regarding control of the screen, try `pythonw` instead of `python`.  It may need to be installed.
 
 ![Sample app](./Assets/)
 

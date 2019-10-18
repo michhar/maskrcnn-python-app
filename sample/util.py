@@ -23,23 +23,12 @@ except ImportError:
 
 IMAGE_WILDCARD = 'Image files (*.jpg, *.png)|*.jpg; *.png'
 INNER_PANEL_WIDTH = 710
-MAX_IMAGE_SIZE = 300
+MAX_IMAGE_SIZE = 600
 MAX_THUMBNAIL_SIZE = 75
 STYLE = wx.SIMPLE_BORDER
 SUBSCRIPTION_KEY_FILENAME = 'Subscription.txt'
 ENDPOINT_FILENAME = 'Endpoint.txt'
 ORIENTATION_TAG = 274
-
-LOG_FACE_LIST_REQUEST = (
-    'Request: Face List {} will be used for build person database. '
-    'Checking whether group exists.')
-LOG_FACE_LIST_NOT_EXIST = 'Response: Face List {} does not exist before.'
-LOG_FACE_LIST_EXIST = 'Response: Face List {} exists.'
-LABEL_FACE = ('{}, {} years old\n'
-              'Hair: {}, Facial Hair: {}\n'
-              'Makeup: {}, Emotion: {}\n'
-              'Occluded: {}, Exposure: {}\n'
-              '{}\n{}\n')
 
 
 class SubscriptionKey(object):
