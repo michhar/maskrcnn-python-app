@@ -44,7 +44,7 @@ python sample
 
 If an error occurs regarding control of the screen, try `pythonw` instead of `python`.  It may need to be installed.
 
-![Sample app](./Assets/)
+![Sample app](./Assets/app_screenshot.png)
 
 
 ## Running the unit tests
@@ -63,12 +63,7 @@ We welcome contributions. Feel free to file issues and pull requests on the repo
 ## Credits
 
 * Much of the code and idea came from https://github.com/microsoft/Cognitive-Face-Python
-* Images used to train the model came from a Google image search
+* Images used to train the model came from Google image search
+* The ML model in association with this repo will not be used for commercial purposes.  It is purely for demo.
 
-## License
-
-All Microsoft Cognitive Services SDKs and samples are licensed with the MIT License. For more details, see
-[LICENSE](/LICENSE.md).
-
-Sample images are licensed separately, please refer to [LICENSE-IMAGE](/LICENSE-IMAGE.md).
 

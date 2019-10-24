@@ -23,7 +23,7 @@ except ImportError:
 
 IMAGE_WILDCARD = 'Image files (*.jpg, *.png)|*.jpg; *.png'
 INNER_PANEL_WIDTH = 710
-MAX_IMAGE_SIZE = 600
+MAX_IMAGE_SIZE = 1000
 MAX_THUMBNAIL_SIZE = 75
 STYLE = wx.SIMPLE_BORDER
 SUBSCRIPTION_KEY_FILENAME = 'Subscription.txt'

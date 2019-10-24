@@ -23,8 +23,8 @@ def detect(image_file, model, class_names):
     print("Running on {}".format(image_file))
     # Read image
     image = skimage.io.imread(image_file)
-    # Detect objects
-    r = model.detect([image], verbose=1)[0]
+    # Detect objects from 3 channel image (removing alpha channel as needed)
+    r = model.detect([image[:,:,:3]], verbose=1)[0]
 
     # # Display results
     ax = get_ax(1)

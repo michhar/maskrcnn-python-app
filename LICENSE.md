@@ -1,10 +1,6 @@
-Microsoft Cognitive Services SDK
-
-Copyright (c) Microsoft Corporation
+Copyright (c) Micheleen Harris
 
 All rights reserved.
-
-*This license applies only to the SDK code. Sample images are licensed separately, please refer to [LICENSE-IMAGE](</LICENSE-IMAGE.md>)*
 
 MIT License
 
