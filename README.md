@@ -29,10 +29,13 @@ Currently it supports the following combination of prerequisites:
 
 1. [Python 3](https://www.python.org/downloads/) + [wxPython 4](https://pypi.python.org/pypi/wxPython) **[Recommended]**
 
-
 P.S. WxPython 3 does not support Python 3 by design.
 
-Then run the following:
+1. Train a MaskRCNN keras model according to https://github.com/matterport/Mask_RCNN (here it's 1 class - "car damage") or use a prebuilt model from the releases page of the Matterport repo: https://github.com/matterport/Mask_RCNN/releases (this one detects balloons).
+
+2. Rename the model to `maskrcnn_model.h5` and place it in the `damage_detect` folder so that `model.py` can find it.
+
+2. Then run the following:
 
 ```bash
 git clone https://github.com/michhar/maskrcnn-python-app.git
