@@ -91,7 +91,8 @@ class MyGridStaticBitmap(wx.Panel):
 
 
 class DetectionModel:
-    def __init__(self, weights_path='mask_rcnn_damage_0010_86images.h5'):
+#    def __init__(self, weights_path='mask_rcnn_damage_0010_86images.h5'):
+    def __init__(self, weights_path='maskrcnn_model.h5'):
         self.weights_path = weights_path
         self.config = None
         self.model = None
