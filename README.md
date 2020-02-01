@@ -33,7 +33,7 @@ P.S. WxPython 3 does not support Python 3 by design.
 
 1. Train a MaskRCNN keras model according to https://github.com/matterport/Mask_RCNN (here it's 1 class - "car damage") or use a prebuilt model from the releases page of the Matterport repo: https://github.com/matterport/Mask_RCNN/releases (this one detects balloons).
 
-2. Rename the model to `maskrcnn_model.h5` and place it in the `damage_detect` folder so that `model.py` can find it.
+2. Rename the model to `maskrcnn_model.h5` and place it in the `sample/view` folder so that `base.py` can find it.
 
 2. Then run the following:
 
