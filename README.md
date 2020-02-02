@@ -4,22 +4,6 @@
 
 A MaskRCNN algorithm is used to detect the car damage (output of the model is class, bounding box and mask).
 
-## Getting started
-
-For a fresh install, from the base directory of the repo, in a terminal, install the `damage-detect` package from source code with:
-
-`pip install .`
-
-> To ensure the proper python, in case of issues, you can always use `python -m pip install .`.
-
-Download and place the ML model in the `sample` directory.
-
-If the package is already installed, make sure to unintall first.
-
-`pip uninstall damage-detect -y`
-
-then install as above.
-
 ## Running the sample
 
 A sample desktop application is also provided in the `sample` directory.
@@ -38,8 +22,14 @@ P.S. WxPython 3 does not support Python 3 by design.
 git clone https://github.com/michhar/maskrcnn-python-app.git
 cd maskrcnn-python-app
 pip install -r requirements.txt
+pip install .
 python sample
 ```
+If the package is already installed, make sure to unintall first.
+
+`pip uninstall damage-detect -y`
+
+then install as above.
 
 ![Sample app](./Assets/app_screenshot.png)
 
