@@ -14,7 +14,7 @@ from wx.lib.agw.fmresources import INB_NO_RESIZE
 
 from view.panel_detection import DetectionPanel
 
-TITLE = u"Detecting Car Damage with Image Segmentation"
+TITLE = u"Image Instance Segmentation for Detecting and Masking Objects"
 
 
 class MyLabelBook(LB.LabelBook):
@@ -24,18 +24,10 @@ class MyLabelBook(LB.LabelBook):
         agw_style = INB_LEFT | INB_FIT_LABELTEXT | INB_NO_RESIZE
         super(MyLabelBook, self).__init__(parent, agwStyle=agw_style)
 
-        # subscription_panel = SubscriptionPanel(self)
-        # subscription_text = u"Subscription Key Management"
-        # self.AddPage(subscription_panel, subscription_text, True)
-
         self.AddPage(wx.Panel(self), u"Select a scenario:")
         self.EnableTab(1, False)
 
-        self.AddPage(DetectionPanel(self), u" - Damage Detection")
-        # self.AddPage(FindSimilarPanel(self), u" - Face Find Similar")
-        # self.AddPage(GroupPanel(self), u" - Face Grouping")
-        # self.AddPage(IdentificationPanel(self), u" - Face Identification")
-        # self.AddPage(VerificationPanel(self), u" - Face Verification")
+        self.AddPage(DetectionPanel(self), u" - Detection and Masks")
 
 
 class MyTitle(wx.Panel):
@@ -79,7 +71,6 @@ class MyFrame(wx.Frame):
         sizer.Add(self.book, 1, flag=wx.EXPAND)
 
         status_text = (
-            'Images from Google images were used to train this model. ' +
             'This is not an official Microsoft product and images will not ' +
             'be used commercially.')
         self.status = wx.StatusBar(self)

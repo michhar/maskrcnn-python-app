@@ -18,90 +18,19 @@ from PIL import Image
 import wx
 
 try:
-    import damage_detect as DD
+    import maskrcnn_detect as DD
 except ImportError:
     import sys
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     sys.path.insert(0, ROOT_DIR)
-    import damage_detect as DD
+    import maskrcnn_detect as DD
 
 IMAGE_WILDCARD = 'Image files (*.jpg, *.png)|*.jpg; *.png'
 INNER_PANEL_WIDTH = 710
 MAX_IMAGE_SIZE = 1000
 MAX_THUMBNAIL_SIZE = 75
 STYLE = wx.SIMPLE_BORDER
-SUBSCRIPTION_KEY_FILENAME = 'Subscription.txt'
-ENDPOINT_FILENAME = 'Endpoint.txt'
 ORIENTATION_TAG = 274
-
-
-class SubscriptionKey(object):
-    """Subscription Key."""
-
-    @classmethod
-    def get(cls):
-        """Get the subscription key."""
-        if not hasattr(cls, 'key'):
-            cls.key = ''
-        if not cls.key:
-            if os.path.isfile(SUBSCRIPTION_KEY_FILENAME):
-                with io.open(SUBSCRIPTION_KEY_FILENAME, encoding='utf-8') as fin:
-                    cls.key = fin.read().strip()
-            else:
-                cls.key = ''
-        DD.Key.set(cls.key)
-        return cls.key
-
-    @classmethod
-    def set(cls, key):
-        """Set the subscription key."""
-        cls.key = key
-        with io.open(SUBSCRIPTION_KEY_FILENAME, 'w', encoding='utf-8') as fout:
-            fout.write(key)
-        DD.Key.set(cls.key)
-
-    @classmethod
-    def delete(cls):
-        """Delete the subscription key."""
-        cls.key = ''
-        if os.path.isfile(SUBSCRIPTION_KEY_FILENAME):
-            os.remove(SUBSCRIPTION_KEY_FILENAME)
-        DD.Key.set(cls.key)
-
-
-class Endpoint(object):
-    """Endpoint."""
-
-    @classmethod
-    def get(cls):
-        """Get the endpoint."""
-        if not hasattr(cls, 'endpoint'):
-            cls.endpoint = ''
-        if not cls.endpoint:
-            if os.path.isfile(ENDPOINT_FILENAME):
-                with io.open(ENDPOINT_FILENAME, encoding='utf-8') as fin:
-                    cls.endpoint = fin.read().strip()
-            else:
-                cls.endpoint = DD.BaseUrl.get()
-        DD.BaseUrl.set(cls.endpoint)
-        return cls.endpoint
-
-    @classmethod
-    def set(cls, endpoint):
-        """Set the endpoint."""
-        cls.endpoint = endpoint
-        with io.open(ENDPOINT_FILENAME, 'w', encoding='utf-8') as fout:
-            fout.write(endpoint)
-        DD.BaseUrl.set(cls.endpoint)
-
-    @classmethod
-    def delete(cls):
-        """Delete the endpoint."""
-        cls.endpoint = ''
-        if os.path.isfile(ENDPOINT_FILENAME):
-            os.remove(ENDPOINT_FILENAME)
-        DD.BaseUrl.set(DD.util.DEFAULT_BASE_URL)
-
 
 def scale_image(img, size=MAX_IMAGE_SIZE):
     """Scale the wx.Image."""

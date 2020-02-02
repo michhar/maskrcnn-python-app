@@ -1,6 +1,7 @@
-# MaskRCNN Instance Segmentation Python App
+# A Python Desktop App for Instance Segmentation with MaskRCNN
 
-![](./Assets/detected_ep50.png)
+![](./assets/detected.png)
+<div align="right"><a href="https://nypost.com/2019/01/20/releasing-balloons-in-east-hampton-could-cost-you-jail-time/" target="_blank">Source</a></div>
 
 A MaskRCNN algorithm is used to detect the car damage (output of the model is class, bounding box and mask).
 
@@ -14,7 +15,7 @@ Currently it supports the following combination: [Python 3](https://www.python.o
 
 P.S. WxPython 3 does not support Python 3 by design.
 
-1. Train a MaskRCNN Keras model according to https://github.com/matterport/Mask_RCNN (here it's 1 class - "car damage") or use a prebuilt model from the releases page of the Matterport repo: https://github.com/matterport/Mask_RCNN/releases (this one detects balloons).
+1. Train a MaskRCNN Keras model according to https://github.com/matterport/Mask_RCNN (take a look at `maskrcnn_detect/custom.py` in this repo as well) or use a prebuilt model from the releases page of the Matterport repo: https://github.com/matterport/Mask_RCNN/releases (try with balloon model as it is also 1 class).
 
 2. Rename the model to `maskrcnn_model.h5` and place it in the `sample` folder so that `base.py` can find it.
 
@@ -33,7 +34,7 @@ If the package is already installed, make sure to uninstall first.
 
 then install as above.
 
-![Sample app](./Assets/app_screenshot.png)
+![Sample app](./assets/app_screenshot.png)
 
 ## Troubleshooting
 

@@ -21,9 +21,36 @@ import urllib.request
 import shutil
 import warnings
 
+from sys import platform as sys_pf
+if sys_pf == 'darwin':
+    import matplotlib
+    matplotlib.use("macOSX")
+
+import os.path
+import time
+import matplotlib.pyplot as plt
+import requests
+
+import maskrcnn_detect as DD
+
+TIME_SLEEP = 1
+
 # URL from which to download the latest COCO trained weights
 COCO_MODEL_URL = "https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5"
 
+############################################################
+#  Plotting
+############################################################
+
+def get_ax(rows=1, cols=1, size=16):
+    """Return a Matplotlib Axes array to be used in
+    all visualizations in the notebook. Provide a
+    central point to control graph sizes.
+    
+    Adjust the size attribute to control how big to render images
+    """
+    _, ax = plt.subplots(rows, cols, figsize=(size*cols, size*rows))
+    return ax
 
 ############################################################
 #  Bounding Boxes

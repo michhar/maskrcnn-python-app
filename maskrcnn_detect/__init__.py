@@ -6,4 +6,3 @@ Description: Relative imports for MaskRCNN package.
 """
 
 from . import detect
-from . import util

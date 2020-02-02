@@ -18,7 +18,7 @@ def readme():
     return io.open(README, encoding='utf-8').read()
 
 setup(
-    name='damage_detect',
+    name='maskrcnn-detect',
     version='0.0.9',
     packages=find_packages(exclude=['tests']),
     install_requires=['requests',

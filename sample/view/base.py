@@ -11,8 +11,8 @@ import sys
 import wx
 
 import util
-from damage_detect.custom import CustomConfig
-import damage_detect.model as modellib
+from maskrcnn_detect.custom import CustomConfig
+import maskrcnn_detect.model as modellib
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT_DIR)

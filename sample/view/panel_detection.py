@@ -28,8 +28,8 @@ class DetectionPanel(base.MyPanel):
         self.hvsizer = wx.BoxSizer(wx.VERTICAL)
         self.hvsizer.SetMinSize((util.INNER_PANEL_WIDTH, -1))
 
-        label = ("To detect car damage in an image, click the 'Choose Image' "
-                 "button. You will see a shape and box surrounding every damaged spot.")
+        label = ("To detect and mask objects in image, click the 'Choose Image' "
+                 "button. You will see a shape and box surrounding every object location.")
         self.static_text = wx.StaticText(self, label=label)
         self.static_text.Wrap(util.INNER_PANEL_WIDTH)
         self.hvsizer.Add(self.static_text, 0, wx.ALL, 5)
@@ -99,16 +99,16 @@ class DetectionPanel(base.MyPanel):
             
             # Use the ML algo on input image, give background (BG) as a class
             res = util.DD.detect.detect(path, self.detection_init.model,
-                class_names=['BG', 'damage'])
+                class_names=['BG', 'object_interest'])
             # Read in image
             self.bitmap.set_path(res['image_file'])
             # Set the image on the StaticBitmap object for display
             util.draw_bitmap_rectangle(self.bitmap)
 
-            log_text = 'Response: Success. Detected {} damaged location(s)'.format(
+            log_text = 'Response: Success. Detected {} object location(s)'.format(
                 res['num_objects'], path)
             self.log.log(log_text)
-            text = '{} damaged location(s) detected.'.format(res['num_objects'])
+            text = '{} object location(s) detected.'.format(res['num_objects'])
             self.result.SetLabelText(text)
         except Exception as exp:
             self.log.log('Response: {}'.format(exp))
