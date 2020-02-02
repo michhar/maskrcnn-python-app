@@ -1,9 +1,8 @@
-# Detecting Car Damage with Instance Segmentation
+# MaskRCNN Instance Segmentation Python App
 
 ![](./Assets/detected_ep50.png)
 
 A MaskRCNN algorithm is used to detect the car damage (output of the model is class, bounding box and mask).
-
 
 ## Getting started
 
@@ -25,19 +24,19 @@ then install as above.
 
 A sample desktop application is also provided in the `sample` directory.
 
-Currently it supports the following combination: [Python 3](https://www.python.org/downloads/) + [wxPython 4+](https://pypi.python.org/pypi/wxPython) **[Recommended]**
+Currently it supports the following combination: [Python 3](https://www.python.org/downloads/) + [wxPython 4+](https://pypi.python.org/pypi/wxPython)
 
 P.S. WxPython 3 does not support Python 3 by design.
 
 1. Train a MaskRCNN Keras model according to https://github.com/matterport/Mask_RCNN (here it's 1 class - "car damage") or use a prebuilt model from the releases page of the Matterport repo: https://github.com/matterport/Mask_RCNN/releases (this one detects balloons).
 
-2. Rename the model to `maskrcnn_model.h5` and place it in the `sample/view` folder so that `base.py` can find it.
+2. Rename the model to `maskrcnn_model.h5` and place it in the `sample` folder so that `base.py` can find it.
 
-2. Then run the following:
+2. To run the app do the following:
 
 ```bash
 git clone https://github.com/michhar/maskrcnn-python-app.git
-cd 
+cd maskrcnn-python-app
 pip install -r requirements.txt
 python sample
 ```
