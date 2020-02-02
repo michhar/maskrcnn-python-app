@@ -1,8 +1,8 @@
 ## Use for CPU
-tensorflow==1.14.0
+tensorflow==1.15.2
 
 ## Uncomment if you have CUDA-enabled GPU
-# tensorflow-gpu==1.14.0
+# tensorflow-gpu==1.15.2
 
 keras==2.2.4
 cython

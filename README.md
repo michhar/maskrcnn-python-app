@@ -6,6 +6,8 @@ A MaskRCNN algorithm is used to detect the car damage (output of the model is cl
 
 ## Running the sample
 
+> Note: If on NVIDIA GPU with CUDA, you can change `tensorflow` to `tensorflow-gpu` in the `requirements.txt` and `setup.py` to take advantage of GPU acceleration.
+
 A sample desktop application is also provided in the `sample` directory.
 
 Currently it supports the following combination: [Python 3](https://www.python.org/downloads/) + [wxPython 4+](https://pypi.python.org/pypi/wxPython)
@@ -25,7 +27,7 @@ pip install -r requirements.txt
 pip install .
 python sample
 ```
-If the package is already installed, make sure to unintall first.
+If the package is already installed, make sure to uninstall first.
 
 `pip uninstall damage-detect -y`
 
