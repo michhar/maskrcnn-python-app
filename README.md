@@ -48,7 +48,12 @@ python sample
 
 1. __This program needs access to the screen. Please run with a Framework build of python, and only when you are logged in on the main display of your Mac.__.  See:  https://stackoverflow.com/questions/48531006/wxpython-this-program-needs-access-to-the-screen
 
-2.  Other errors, try `pythonw` instead of `python` or `python3`.
+For other errors:
+
+2.  Try `pythonw` instead of `python` or `python3`.
+3.  Try a `venv` virtual environment.
+3.  Try using the system Python 3.
+4.  Upgrade pip (`pip install --upgrade pip`).
 
 ## Contributing
 
