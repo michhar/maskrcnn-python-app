@@ -3,7 +3,7 @@
 ![](./assets/detected.png)
 <div align="right"><a href="https://nypost.com/2019/01/20/releasing-balloons-in-east-hampton-could-cost-you-jail-time/" target="_blank">Source</a></div>
 
-A MaskRCNN algorithm is used to detect the car damage (output of the model is class, bounding box and mask).
+Above, a MaskRCNN model is used to detect balloons (output of the model is class, bounding box and mask).
 
 ## Running the sample
 
@@ -30,7 +30,7 @@ python sample
 ```
 If the package is already installed, make sure to uninstall first.
 
-`pip uninstall damage-detect -y`
+`pip uninstall maskrcnn-detect -y`
 
 then install as above.
 
