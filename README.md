@@ -55,7 +55,6 @@ Contributions are welcome. Feel free to file issues and pull requests on the rep
 ## Credits
 
 * Much of the code and idea came from https://github.com/microsoft/Cognitive-Face-Python
-* Images used to train the model came from Google image search
-* The ML model in association with this repo will not be used for commercial purposes.  It is purely for demo.
+* The MaskRCNN code to create the package here, came from https://github.com/matterport/Mask_RCNN as well as the demo ML model.
 
 
