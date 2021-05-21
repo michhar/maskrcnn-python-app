@@ -23,7 +23,7 @@ setup(
     packages=find_packages(exclude=['tests']),
     install_requires=['requests',
                       # Change tensorflow to tensorflow-gpu on GPU
-                      'tensorflow==1.15.2',
+                      'tensorflow==2.5.0',
                       'keras==2.2.4',
                       'cython',
                       'h5py==2.8.0',
