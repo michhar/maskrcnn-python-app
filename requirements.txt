@@ -13,7 +13,7 @@ matplotlib
 jupyter
 
 pep8==1.7.1
-pillow==6.2.0
+pillow==8.2.0
 pyflakes==2.1.1
 pylint==2.4.2
 requests==2.22.0
