@@ -28,7 +28,7 @@ setup(
                       'cython',
                       'h5py==2.8.0',
                       'scikit-image==0.15.0',
-                      'opencv-python==4.1.1.26',
+                      'opencv-python==4.2.0.32',
                       'matplotlib',
                       'jupyter'],
     author='Micheleen Harris',
