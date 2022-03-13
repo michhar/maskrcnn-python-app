@@ -119,7 +119,7 @@ class DetectionModel:
                             model_dir=ROOT_DIR)
 
     def load_model_weights(self):
-        self.model.load_weights(os.path.join(ROOT_DIR, self.weights_path), 
+        self.model._load_weights(os.path.join(ROOT_DIR, self.weights_path), 
             by_name=True)
 
 

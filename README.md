@@ -7,7 +7,7 @@ Above, a MaskRCNN model is used to detect balloons (output of the model is class
 
 ## Running the sample
 
-> Note: If on NVIDIA GPU with CUDA, you can change `tensorflow` to `tensorflow-gpu` in the `requirements.txt` and `setup.py` to take advantage of GPU acceleration.
+> Note: the sample is tested with TensorFlow 2.6 and MacOS
 
 A sample desktop application is also provided in the `sample` directory.
 
@@ -19,15 +19,33 @@ P.S. WxPython 3 does not support Python 3 by design.
 
 2. Rename the model to `maskrcnn_model.h5` and place it in the `sample` folder so that `base.py` can find it.
 
-2. To run the app do the following:
+2. To run the app do the following, using a virtual enviroment to avoid environment errors and keep setup contained.
 
 ```bash
 git clone https://github.com/michhar/maskrcnn-python-app.git
 cd maskrcnn-python-app
+python3 -m venv myenv
+```
+
+If using Windows, activate the virtual environment with:
+```
+myenv\Scripts\activate
+```
+
+If using Unix based systems, activate the virtual environment with:
+```
+source myenv/bin/activate
+```
+
+Install the required Python packages as follows (if on Windows, you may need to install some of the packages individually from a build such as can be found at [https://www.lfd.uci.edu/~gohlke/pythonlibs/](https://www.lfd.uci.edu/~gohlke/pythonlibs/)).
+
+```
+pip install --upgrade pip
 pip install -r requirements.txt
-pip install .
+pip install -e .
 python sample
 ```
+
 If the package is already installed, make sure to uninstall first.
 
 `pip uninstall maskrcnn-detect -y`
@@ -42,14 +60,13 @@ then install as above.
 
 For other errors:
 
-2.  Try `pythonw` instead of `python` or `python3`.
-3.  Try a `venv` virtual environment.
-3.  Try using the system Python 3.
-4.  Upgrade pip (`pip install --upgrade pip`).
+1.  Try `pythonw` instead of `python` or `python3`.
+2.  Try using the system Python 3.
+3.  Upgrade pip (`pip install --upgrade pip`).
 
 ## Contributing
 
-Contributions are welcome. Feel free to file issues and pull requests on the repo and we'll address them as we can. Learn more about how you can help on our [Contribution Rules & Guidelines](/CONTRIBUTING.md).
+Contributions are welcome. Feel free to file issues and pull requests on the repo and I'll address them as I can. Learn more about how you can help on our [Contribution Rules & Guidelines](/CONTRIBUTING.md).
 
 
 ## Credits

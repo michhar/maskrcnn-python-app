@@ -4,7 +4,6 @@
 File: __init__.py
 Description: View components for Python SDK sample.
 """
-
 import wx
 import wx.lib.agw.labelbook as LB
 

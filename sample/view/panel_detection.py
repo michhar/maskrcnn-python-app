@@ -40,12 +40,12 @@ class DetectionPanel(base.MyPanel):
         self.lsizer = wx.BoxSizer(wx.VERTICAL)
         self.lsizer.SetMinSize((util.MAX_IMAGE_SIZE, -1))
 
-        flag = wx.EXPAND | wx.ALIGN_CENTER | wx.ALL
+        flag = wx.ALIGN_RIGHT
         self.btn = wx.Button(self, label='Choose Image')
         self.lsizer.Add(self.btn, 0, flag, 5)
         self.Bind(wx.EVT_BUTTON, self.OnChooseImage, self.btn)
 
-        flag = wx.ALIGN_CENTER | wx.ALL
+        flag = wx.ALIGN_CENTRE_HORIZONTAL
         # Set up the place to place image element
         self.bitmap = base.MyStaticBitmap(self)
         self.lsizer.Add(self.bitmap, 0, flag, 5)
@@ -57,7 +57,7 @@ class DetectionPanel(base.MyPanel):
         self.rsizer.SetMinSize((util.MAX_IMAGE_SIZE, -1))
 
         style = wx.ALIGN_CENTER
-        flag = wx.ALIGN_CENTER | wx.EXPAND | wx.ALL
+        flag = wx.ALIGN_CENTRE_HORIZONTAL
         self.result = wx.StaticText(self, style=style)
         self.rsizer.Add(self.result, 0, flag, 5)
 
