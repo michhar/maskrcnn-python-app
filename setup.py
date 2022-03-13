@@ -22,7 +22,7 @@ setup(
     version='0.0.9',
     packages=find_packages(exclude=['tests']),
     install_requires=['requests',
-                      'tensorflow==2.6.2',
+                      'tensorflow~=2.6',
                       'cython',
                       'h5py',
                       'scikit-image',
