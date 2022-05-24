@@ -1,4 +1,4 @@
-tensorflow==2.6.3
+tensorflow==2.6.4
 
 cython
 h5py
