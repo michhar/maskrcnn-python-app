@@ -43,12 +43,13 @@ from timeit import default_timer as timer
 
 
 # Root directory of the project
-ROOT_DIR = os.path.abspath("../../")
+ROOT_DIR = os.path.abspath("../")
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 # Import Mask RCNN
 sys.path.append(ROOT_DIR)  # To find local version of the library
+sys.path.append('.')  # To find local version of the library
 from .visualize import display_instances
 from .config import Config
 from . import model as modellib, utils
@@ -69,8 +70,8 @@ class CustomConfig(Config):
     """Configuration for training on the toy  dataset.
     Derives from the base Config class and overrides some values.
     """
-    # Give the configuration a recognizable name
-    NAME = "damage"
+    # # Give the configuration a recognizable name
+    # NAME = "damage"
 
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
@@ -85,6 +86,11 @@ class CustomConfig(Config):
     # Skip detections with < 90% confidence
     DETECTION_MIN_CONFIDENCE = 0.9
 
+    def __init__(self, class_name):
+        super(CustomConfig, self).__init__()
+        self.class_name = class_name
+        self.NAME = class_name
+
 
 ############################################################
 #  Dataset
@@ -92,13 +98,13 @@ class CustomConfig(Config):
 
 class CustomDataset(utils.Dataset):
 
-    def load_custom(self, dataset_dir, subset):
+    def load_custom(self, dataset_dir, subset, class_name):
         """Load a subset of the Balloon dataset.
         dataset_dir: Root directory of the dataset.
         subset: Subset to load: train or val
         """
         # Add classes. We have only one class to add.
-        self.add_class("damage", 1, "damage")
+        self.add_class(class_name, 1, class_name)
 
         # Train or validation dataset?
         assert subset in ["train", "val"]
@@ -143,13 +149,13 @@ class CustomDataset(utils.Dataset):
             height, width = image.shape[:2]
 
             self.add_image(
-                "damage",  ## for a single class just add the name here
+                class_name,  ## for a single class just add the name here
                 image_id=a['filename'],  # use file name as a unique image id
                 path=image_path,
                 width=width, height=height,
                 polygons=polygons)
 
-    def load_mask(self, image_id):
+    def load_mask(self, image_id, class_name):
         """Generate instance masks for an image.
        Returns:
         masks: A bool array of shape [height, width, instance count] with
@@ -158,7 +164,7 @@ class CustomDataset(utils.Dataset):
         """
         # If not a balloon dataset image, delegate to parent class.
         image_info = self.image_info[image_id]
-        if image_info["source"] != "damage":
+        if image_info["source"] != class_name:
             return super(self.__class__, self).load_mask(image_id)
 
         # Convert polygons to a bitmap mask of shape
@@ -175,10 +181,10 @@ class CustomDataset(utils.Dataset):
         # one class ID only, we return an array of 1s
         return mask.astype(np.bool), np.ones([mask.shape[-1]], dtype=np.int32)
 
-    def image_reference(self, image_id):
+    def image_reference(self, image_id, class_name):
         """Return the path of the image."""
         info = self.image_info[image_id]
-        if info["source"] == "damage":
+        if info["source"] == class_name:
             return info["path"]
         else:
             super(self.__class__, self).image_reference(image_id)
@@ -363,6 +369,8 @@ if __name__ == '__main__':
     parser.add_argument("command",
                         metavar="<command>",
                         help="'train', 'splash', or 'splash_movie'")
+    parser.add_argument('--class_name', required=True,
+                        help='Binary class name')
     parser.add_argument('--dataset', required=False,
                         metavar="/path/to/custom/dataset/",
                         help='Directory of the custom dataset')
@@ -379,6 +387,7 @@ if __name__ == '__main__':
     parser.add_argument('--video', required=False,
                         metavar="path or URL to video",
                         help='Video to apply the color splash effect on')
+    
     args = parser.parse_args()
 
     # Validate arguments
@@ -394,14 +403,14 @@ if __name__ == '__main__':
 
     # Configurations
     if args.command == "train":
-        config = CustomConfig()
+        config = CustomConfig(name=args.class_name)
     else:
         class InferenceConfig(CustomConfig):
             # Set batch size to 1 since we'll be running inference on
             # one image at a time. Batch size = GPU_COUNT * IMAGES_PER_GPU
             GPU_COUNT = 1
             IMAGES_PER_GPU = 1
-        config = InferenceConfig()
+        config = InferenceConfig(class_name=args.class_name)
     config.display()
 
     # Create model
@@ -432,17 +441,17 @@ if __name__ == '__main__':
     if args.weights.lower() == "coco":
         # Exclude the last layers because they require a matching
         # number of classes
-        model.load_weights(weights_path, by_name=True, exclude=[
+        model._load_weights(weights_path, by_name=True, exclude=[
             "mrcnn_class_logits", "mrcnn_bbox_fc",
             "mrcnn_bbox", "mrcnn_mask"])
     else:
-        model.load_weights(weights_path, by_name=True)
+        model._load_weights(weights_path, by_name=True)
 
     # Train or evaluate
     if args.command == "train":
         train(model)
     elif args.command == 'image':
-         detect_and_draw_image(model, image_path=args.image, class_names=['BG', 'damage'])       
+         detect_and_draw_image(model, image_path=args.image, class_names=['BG', args.class_name])       
     elif args.command == "splash":
         detect_and_color_splash(model, image_path=args.image,
                                 video_path=args.video)

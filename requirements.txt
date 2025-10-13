@@ -1,17 +1,15 @@
-tensorflow==2.6.3
-
-cython
-h5py
-scikit-image
-opencv-python
-matplotlib
-jupyter
-imgaug
-
-pep8
-pillow
-pyflakes
-pylint
-requests
-wxpython
+Cython==3.1
+scikit-image==0.24.0
+opencv-python==4.11
+matplotlib==3.9
+jupyter==1.1
+pillow==11.3
+numpy==1.24
+h5py==3.14
+tensorflow==2.13
+# tensorflow-metal==1.2 # for acceleration on apple silicon
+keras==3.10
+wxPython==4.2
+wxasync==0.49
+asyncio==4.0
 

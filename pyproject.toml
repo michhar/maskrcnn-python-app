@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "maskrcnn-detect"
+version = "0.1.0"
+dependencies = [
+    "Cython==3.1",
+    "scikit-image==0.24.0",
+    "opencv-python~=4.11",
+    "matplotlib==3.9",
+    "jupyter==1.1",
+    "pillow==11.3",
+    "numpy==1.24",
+    "h5py==3.14",
+    "tensorflow~=2.13",
+    "keras~=3.10",
+    "wxPython==4.2",
+    "wxasync==0.49",
+    "asyncio==4.0",
+]
+requires-python = ">=3.9"
+maintainers = [
+  {name = "Micheleen Harris"}
+]
+description = "A Python app and package for image instance segmentation with Mask R-CNN."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICEN[CS]E.*"]
+keywords = ["Mask R-CNN", "instance segmentation", "computer vision", "wxPython app"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python  :: 3",
+  "Topic :: Scientific/Engineering :: Instance Segmentation",
+]
+
+[project.optional-dependencies]
+cli = [
+  "rich",
+  "click",
+]
+dev = [
+    "pytest",
+    "black",
+    "flake8",
+]
+
+[project.urls]
+Homepage = "https://github.com/michhar/maskrcnn-python-app"
+Repository = "https://github.com/michhar/maskrcnn-python-app.git"
+"Bug Tracker" = "https://github.com/michhar/maskrcnn-python-app/issues"
+
+[tool.setuptools.packages.find]
+    where = ["."]

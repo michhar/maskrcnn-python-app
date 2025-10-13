@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 """
 File: __init__.py
-Description: View components for Python SDK sample.
+Description: View components for Python sample.
 """
 import wx
+
 import wx.lib.agw.labelbook as LB
 
 from wx.lib.agw.fmresources import INB_FIT_LABELTEXT
@@ -13,20 +14,22 @@ from wx.lib.agw.fmresources import INB_NO_RESIZE
 
 from view.panel_detection import DetectionPanel
 
-TITLE = u"Image Instance Segmentation for Detecting and Masking Objects"
+TITLE = "Instance Segmentation with Mask R-CNN for Objects in Images"
 
 
 class MyLabelBook(LB.LabelBook):
     """LabelBook part in Main Frame."""
 
-    def __init__(self, parent):
+    def __init__(self, parent, weights_path):
         agw_style = INB_LEFT | INB_FIT_LABELTEXT | INB_NO_RESIZE
         super(MyLabelBook, self).__init__(parent, agwStyle=agw_style)
+
+        self.SetMinSize((-1, 30))
 
         self.AddPage(wx.Panel(self), u"Select a scenario:")
         self.EnableTab(1, False)
 
-        self.AddPage(DetectionPanel(self), u" - Detection and Masks")
+        self.AddPage(DetectionPanel(self, weights_path), u" - Instance Segmentation Task")
 
 
 class MyTitle(wx.Panel):
@@ -55,18 +58,14 @@ class MyTitle(wx.Panel):
 class MyFrame(wx.Frame):
     """Main Frame."""
 
-    def __init__(self, parent):
+    def __init__(self, parent, weights_path):
         super(MyFrame, self).__init__(parent, title=TITLE, size=(1280, 768))
-
-        # icon_path = 'Assets/Microsoft-logo_rgb_c-gray.png'
-        # self.SetIcon(wx.Icon(icon_path))
-
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.title = MyTitle(self)
         sizer.Add(self.title, flag=wx.EXPAND)
 
-        self.book = MyLabelBook(self)
+        self.book = MyLabelBook(self, weights_path)
         sizer.Add(self.book, 1, flag=wx.EXPAND)
 
         status_text = (
@@ -80,11 +79,11 @@ class MyFrame(wx.Frame):
         self.Layout()
 
 
-class MyApp(wx.App):
-    """The whole app."""
+# class MyApp(WxAsyncApp):
+#     """The whole app."""
 
-    def OnInit(self):
-        """Show main frame."""
-        frame = MyFrame(None)
-        frame.Show()
-        return True
+#     async def OnInitAsync(self):
+#         """Show main frame."""
+#         frame = MyFrame(None, base.WEIGHTS_PATH)
+#         frame.Show()
+#         return True

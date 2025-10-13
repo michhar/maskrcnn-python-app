@@ -2,23 +2,24 @@
 # -*- coding: utf-8 -*-
 """
 File: panel_detection.py
-Description: Detection Panel for Python SDK sample.
+Description: Detection Panel for Python sample.
 """
 
 import wx
+from wxasync import AsyncBind
+import asyncio
 
 import util
-import model
 from view import base
 
 
 class DetectionPanel(base.MyPanel):
     """Detection Panel."""
 
-    def __init__(self, parent):
+    def __init__(self, parent, weights_path):
         super(DetectionPanel, self).__init__(parent)
 
-        self.detection_init = base.DetectionModel()
+        self.detection_init = base.DetectionModel(weights_path, base.CLASS_NAME)
 
         self.vsizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -43,7 +44,9 @@ class DetectionPanel(base.MyPanel):
         flag = wx.ALIGN_RIGHT
         self.btn = wx.Button(self, label='Choose Image')
         self.lsizer.Add(self.btn, 0, flag, 5)
-        self.Bind(wx.EVT_BUTTON, self.OnChooseImage, self.btn)
+
+        # Use AsyncBind for the asynchronous event handler
+        # self.Bind(wx.EVT_BUTTON, self.OnChooseImage, self.btn)
 
         flag = wx.ALIGN_CENTRE_HORIZONTAL
         # Set up the place to place image element
@@ -77,41 +80,61 @@ class DetectionPanel(base.MyPanel):
 
         self.SetSizerAndFit(self.vsizer)
 
-    def OnChooseImage(self, evt):
+        # AsyncBind(wx.EVT_BUTTON, self.OnChooseImage, self.btn)
+        AsyncBind(wx.EVT_BUTTON, self.async_detect, self.btn)
+
+    async def OnChooseImage(self, event):
         """Choose Image."""
         dlg = wx.FileDialog(self, wildcard=util.IMAGE_WILDCARD)
         if dlg.ShowModal() != wx.ID_OK:
             return
         path = dlg.GetPath()
-        print(path)
-        self.async_detect(path)
+        await self.async_detect(path)
 
-    # @util.async_dec
-    def async_detect(self, path):
+    def choose_image(self):
+        dlg = wx.FileDialog(self, wildcard=util.IMAGE_WILDCARD)
+        if dlg.ShowModal() != wx.ID_OK:
+            return
+        path = dlg.GetPath()
+        return path
+
+    async def async_test(self, event):
+        """Test async w/ wx"""
+        self.result.SetLabel("Button clicked")
+        await asyncio.sleep(1)
+        self.result.SetLabel("Working")
+        await asyncio.sleep(1)
+        self.result.SetLabel("Completed")
+
+    async def async_detect(self, event):
         """Async detection."""
-        self.log.log('Request: Detecting {}'.format(path))
+        path = self.choose_image()
+        # self.log.log('Request: Detecting {}'.format(path))
         self.result.SetLabelText('Detecting ...')
         self.btn.Disable()
         self.rsizer.Layout()
         self.vhsizer.Layout()
 
-        try:
-            
-            # Use the ML algo on input image, give background (BG) as a class
-            res = util.DD.detect.detect(path, self.detection_init.model,
-                class_names=['BG', 'object_interest'])
-            # Read in image
-            self.bitmap.set_path(res['image_file'])
-            # Set the image on the StaticBitmap object for display
-            util.draw_bitmap_rectangle(self.bitmap)
+        # try:
+        # Use the ML algo on input image, give background (BG) as a class
+        res = await util.DD.detect.async_detect(path, self.detection_init.model,
+            class_names=['BG', base.CLASS_NAME])
+        self.result.SetLabelText('Preparing result...')
+        # Read in image
+        self.bitmap.set_path(res['image_file'])
+        # Set the image on the StaticBitmap object for display
+        util.draw_bitmap_rectangle(self.bitmap)
+        self.result.SetLabelText('Done.')
+        res_text = f"{res['num_objects']} object location(s) detected."
+        self.result.SetLabelText(res_text)
 
-            log_text = 'Response: Success. Detected {} object location(s)'.format(
-                res['num_objects'], path)
-            self.log.log(log_text)
-            text = '{} object location(s) detected.'.format(res['num_objects'])
-            self.result.SetLabelText(text)
-        except Exception as exp:
-            self.log.log('Response: {}'.format(exp))
+        # log_text = 'Response: Success. Detected {} object location(s)'.format(
+        #     res['num_objects'], path)
+        # self.log.log(log_text)
+        # text = '{} object location(s) detected.'.format(res['num_objects'])
+        # self.result.SetLabelText(text)
+        # except Exception as exp:
+        #     self.log.log('Response: {}'.format(exp))
 
         self.btn.Enable()
         self.rsizer.Layout()

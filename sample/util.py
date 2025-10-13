@@ -4,13 +4,10 @@
 File: util.py
 Description: util module for Python sample.
 """
-from sys import platform as sys_pf
-if sys_pf == 'darwin':
-    import matplotlib
-    matplotlib.use("macOSX")
+import matplotlib
+matplotlib.use('wxagg')
 
 from threading import Thread
-import io
 import operator
 import os.path
 

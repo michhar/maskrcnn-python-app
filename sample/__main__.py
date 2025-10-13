@@ -1,12 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-File: main.py
+File: __main__.py
 Description: main script for Python sample.
 """
+from wxasync import WxAsyncApp
+from view import MyFrame, base
+import asyncio
 
-from view import MyApp
 
 if __name__ == "__main__":
-    app = MyApp(False)
-    app.MainLoop()
+
+    async def main():            
+        app = WxAsyncApp()
+        frame = MyFrame(None, base.WEIGHTS_PATH)
+        frame.Show()
+        await app.MainLoop()
+
+asyncio.run(main())
+

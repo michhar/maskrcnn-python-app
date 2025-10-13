@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-File: view.py
-Description: Base components for Python SDK sample.
+File: base.py
+Description: Base components for Python sample.
 """
 import time
 import os
@@ -15,7 +15,11 @@ from maskrcnn_detect.custom import CustomConfig
 import maskrcnn_detect.model as modellib
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CLASS_NAME = "balloon"
+WEIGHTS_PATH = "mask_rcnn_balloon.h5"
+
 sys.path.insert(0, ROOT_DIR)
+
 
 class MyPanel(wx.Panel):
     """Base Panel."""
@@ -80,20 +84,11 @@ class MyGridStaticBitmap(wx.Panel):
         self.SetSizerAndFit(self.sizer)
         self.sizer.Layout()
 
-    def set_faces(self, faces):
-        """Set the faces."""
-        self.sizer.Clear(True)
-        for face in faces:
-            bitmap = MyStaticBitmap(self, bitmap=face.bmp, size=self.size)
-            self.sizer.Add(bitmap)
-        self.SetSizerAndFit(self.sizer)
-        self.sizer.Layout()
-
 
 class DetectionModel:
-#    def __init__(self, weights_path='mask_rcnn_damage_0010_86images.h5'):
-    def __init__(self, weights_path='maskrcnn_model.h5'):
+    def __init__(self, weights_path, class_name):
         self.weights_path = weights_path
+        self.class_name = class_name
         self.config = None
         self.model = None
 
@@ -108,18 +103,23 @@ class DetectionModel:
 
     def load_inference_config(self):
         class InferenceConfig(CustomConfig):
+
             # Set batch size to 1 since we'll be running inference on
             # one image at a time. Batch size = GPU_COUNT * IMAGES_PER_GPU
             GPU_COUNT = 1
             IMAGES_PER_GPU = 1
-        self.config = InferenceConfig()
+
+            def __init__(self, class_name):
+                super(InferenceConfig, self).__init__(class_name=class_name)
+
+        self.config = InferenceConfig(class_name=self.class_name)
 
     def initialize_model(self):
         self.model = modellib.MaskRCNN(mode="inference", config=self.config,
                             model_dir=ROOT_DIR)
 
     def load_model_weights(self):
-        self.model._load_weights(os.path.join(ROOT_DIR, self.weights_path), 
+        self.model.load_weights(os.path.join(ROOT_DIR, self.weights_path), 
             by_name=True)
 
 

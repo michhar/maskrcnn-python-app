@@ -1,56 +1,57 @@
-# A Python Desktop App for Instance Segmentation with MaskRCNN
+# A Python Desktop App for Instance Segmentation with Mask R-CNN
 
 ![](./assets/detected.png)
 <div align="right"><a href="https://nypost.com/2019/01/20/releasing-balloons-in-east-hampton-could-cost-you-jail-time/" target="_blank">Source</a></div>
 
-Above, a MaskRCNN model is used to detect balloons (output of the model is class, bounding box and mask).
+Above, a Mask R-CNN model is used to detect balloons (output of the model is the class, bounding box and mask). Mask R-CNN is an instance segmentation computer vision model based on the Faster R-CNN object detection model, with the addition of segmentation capabilities.  The original paper from 2018 can be found [here](https://arxiv.org/abs/1703.06870).
+
+Much of the `maskrcnn_detect` package code comes from Waleed Abdulla's awesome work for Matterport, Inc. at https://github.com/matterport/Mask_RCNN.
 
 ## Running the sample
 
-> Note: the sample is tested with TensorFlow 2.6 and MacOS
+Currently, this sample desktop application supports the following combination: [Python 3](https://www.python.org/downloads/) + [wxPython 4+](https://pypi.python.org/pypi/wxPython).  This sample only supports one class at this time.
 
-A sample desktop application is also provided in the `sample` directory.
+1. Train a Mask R-CNN Keras model according to https://github.com/matterport/Mask_RCNN (take a look at `maskrcnn_detect/custom.py` in this repo as well) or use a prebuilt model from the releases page of the Matterport repo: https://github.com/matterport/Mask_RCNN/releases (try with the balloon model as it is simpler than the COCO-based model at only 1 class).
 
-Currently it supports the following combination: [Python 3](https://www.python.org/downloads/) + [wxPython 4+](https://pypi.python.org/pypi/wxPython)
+2. Update the `sample/view/base.py` file if using a single-class model different from Matterport's `` model. Take a look at and update as needed the following lines of the `base.py` file (lines 18 and 19):
 
-P.S. WxPython 3 does not support Python 3 by design.
+```
+CLASS_NAME = "balloon"
+WEIGHTS_PATH = "mask_rcnn_balloon.h5"
+```
 
-1. Train a MaskRCNN Keras model according to https://github.com/matterport/Mask_RCNN (take a look at `maskrcnn_detect/custom.py` in this repo as well) or use a prebuilt model from the releases page of the Matterport repo: https://github.com/matterport/Mask_RCNN/releases (try with balloon model as it is also 1 class).
-
-2. Rename the model to `maskrcnn_model.h5` and place it in the `sample` folder so that `base.py` can find it.
-
-2. To run the app do the following, using a virtual enviroment to avoid environment errors and keep setup contained.
+2. To run the app do the following, using a virtual enviroment to avoid environment errors and keep the setup contained.
 
 ```bash
 git clone https://github.com/michhar/maskrcnn-python-app.git
 cd maskrcnn-python-app
-python3 -m venv myenv
+python3 -m venv venv
 ```
 
 If using Windows, activate the virtual environment with:
 ```
-myenv\Scripts\activate
+venv\Scripts\activate
 ```
 
 If using Unix based systems, activate the virtual environment with:
 ```
-source myenv/bin/activate
+source venv/bin/activate
 ```
 
-Install the required Python packages as follows (if on Windows, you may need to install some of the packages individually from a build such as can be found at [https://www.lfd.uci.edu/~gohlke/pythonlibs/](https://www.lfd.uci.edu/~gohlke/pythonlibs/)).
-
+Install the required Python packages as follows (if on Windows, you may need to install some of the packages individually from a build such as can be found at [https://www.lfd.uci.edu/~gohlke/pythonlibs/](https://www.lfd.uci.edu/~gohlke/pythonlibs/)). The packages and versions are defined in the project's `pyproject.toml` file.
 ```
 pip install --upgrade pip
-pip install -r requirements.txt
 pip install -e .
+```
+
+Run the sample:
+```
 python sample
 ```
 
-If the package is already installed, make sure to uninstall first.
+If the `maskrcnn-detect` package is already installed, make sure to uninstall first, then reinstall.
 
 `pip uninstall maskrcnn-detect -y`
-
-then install as above.
 
 ![Sample app](./assets/app_screenshot.png)
 
